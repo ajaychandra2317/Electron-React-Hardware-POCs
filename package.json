@@ -2,6 +2,9 @@
   "name": "react-electron-ts-pwa",
   "version": "0.1.0",
   "private": true,
+  "main": "public/main.js",
+  "author": "AjayChandra",
+  "description": "Hardware POC's",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -10,17 +13,31 @@
     "@types/node": "^16.11.43",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
+    "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-media-recorder": "^1.6.6",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "electron-forge start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "electron .",
+    "start:dev": "env-cmd -f src/environments/.dev.env react-scripts start",
+    "build:dev": "env-cmd -f src/environments/.dev.env npm run-script build",
+    "start:qa": "env-cmd -f src/environments/.qa.env react-scripts start",
+    "build:qa": "env-cmd -f src/environments/.qa.env npm run-script build",
+    "start:cloud": "env-cmd -f src/environments/.cloud.env react-scripts start",
+    "build:cloud": "env-cmd -f src/environments/.cloud.env npm run-script build",
+    "start:prod": "env-cmd -f src/environments/.prod.env react-scripts start",
+    "build:prod": "env-cmd -f src/environments/.prod.env npm run-script build",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +56,43 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.64",
+    "@electron-forge/maker-deb": "^6.0.0-beta.64",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.64",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.64",
+    "@electron-forge/maker-zip": "^6.0.0-beta.64",
+    "@types/jquery": "^3.5.14",
+    "electron": "^19.0.8",
+    "env-cmd": "^10.1.0",
+    "sass": "^1.53.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "react_electron_ts_pwa"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
